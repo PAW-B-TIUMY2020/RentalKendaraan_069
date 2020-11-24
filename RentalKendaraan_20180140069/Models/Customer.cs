@@ -11,6 +11,7 @@ namespace RentalKendaraan_20180140069.Models
         }
 
         public int IdCostumer { get; set; }
+        []
         public string NamaCustomer { get; set; }
         public string Nik { get; set; }
         public string Alamat { get; set; }

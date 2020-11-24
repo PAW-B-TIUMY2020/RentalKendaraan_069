@@ -12,6 +12,7 @@ namespace RentalKendaraan_20180140069.Controllers
     public class JaminansController : Controller
     {
         private readonly RentKendaraanContext _context;
+        private string searchString;
 
         public JaminansController(RentKendaraanContext context)
         {
@@ -19,9 +20,25 @@ namespace RentalKendaraan_20180140069.Controllers
         }
 
         // GET: Jaminans
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string ktsd, string searchString)
         {
-            return View(await _context.Jaminan.ToListAsync());
+            var ktsdList = new List<string>();
+            var ktsdQuery = from d in _context.Jaminan orderby d.NamaJaminan select d.NamaJaminan;
+            ktsdList.AddRange(ktsdQuery.Distinct());
+
+            ViewBag.ktsd = new SelectList(ktsdList);
+            var menu = from m in _context.Jaminan.Include(k => k.IdJaminan) select m;
+
+            if (!string.IsNullOrEmpty(ktsd))
+            {
+                menu = menu.Where(x => x.NamaJaminan == ktsd);
+            }
+            //untuk search data
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                menu = menu.Where(s => s.NamaJaminan.Contains(searchString));
+            }
+            return View(await menu.ToListAsync());
         }
 
         // GET: Jaminans/Details/5
