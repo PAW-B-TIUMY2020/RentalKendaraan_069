@@ -79,12 +79,12 @@
             </tr>
         }
     </tbody>
-    
+
 </table>
-@{ 
+@{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 <a asp-action="Index"
-asp-route-sortOrder ="@ViewData["CurrentSort"]"
-asp-route-pageNumber ="@(Model.PageIndex - 1)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
